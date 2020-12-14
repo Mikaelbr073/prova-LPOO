@@ -17,7 +17,7 @@ public class Teste {
 				+ "5. Alterar o número e nome da agência \n"
 				+ "0. Sair \n"
 				);
-		System.out.println("oi");
+		
 	}
 
 }
