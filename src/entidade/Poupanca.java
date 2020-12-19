@@ -8,9 +8,9 @@ public class Poupanca extends Conta {
 	
 	private double juros;
 
-	public Poupanca(int numero, Banco banco, Cliente cliente, double saldo, double juros) {
+	public Poupanca(String numero, Banco banco, Cliente cliente, double saldo) {
 		super(numero, banco, cliente, saldo);
-		this.juros = juros;
+		this.juros = 0;
 	}
 
 	public double getJuros() {
@@ -21,6 +21,9 @@ public class Poupanca extends Conta {
 		this.juros = juros;
 	}
 	
-
+	public void render() {
+		double novo = super.getSaldo() + super.getSaldo()/45;
+		super.setSaldo(novo);	
+	}
 	
 }

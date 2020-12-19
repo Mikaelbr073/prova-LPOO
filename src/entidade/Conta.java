@@ -5,24 +5,25 @@ package entidade;
  *
  */
 public class Conta {
-	
-	private int numero;
+
+	private String numero;
 	private Banco banco;
 	private Cliente cliente;
 	private double saldo;
-	
-	public Conta(int numero, Banco banco, Cliente cliente, double saldo) {
+
+	public Conta(String numero, Banco banco, Cliente cliente, double saldo) {
 		this.numero = numero;
 		this.banco = banco;
 		this.cliente = cliente;
 		this.saldo = saldo;
+
 	}
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
@@ -49,8 +50,5 @@ public class Conta {
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-	
-	
-	
-	
-  }
+
+}

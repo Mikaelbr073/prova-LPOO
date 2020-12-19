@@ -6,19 +6,19 @@ package entidade;
  */
 public class Banco {
 	
-	private int numeroAgencia;
+	private String numeroAgencia;
 	private String nomeAgencia;
 	
-	public Banco(int numeroAgencia, String nomeAgencia) {
+	public Banco(String numeroAgencia, String nomeAgencia) {
 		this.numeroAgencia = numeroAgencia;
 		this.nomeAgencia = nomeAgencia;
 	}
 
-	public int getNumeroAgencia() {
+	public String getNumeroAgencia() {
 		return numeroAgencia;
 	}
 
-	public void setNumeroAgencia(int numeroAgencia) {
+	public void setNumeroAgencia(String numeroAgencia) {
 		this.numeroAgencia = numeroAgencia;
 	}
 
@@ -29,6 +29,7 @@ public class Banco {
 	public void setNomeAgencia(String nomeAgencia) {
 		this.nomeAgencia = nomeAgencia;
 	}
+	
 	
 	
 
