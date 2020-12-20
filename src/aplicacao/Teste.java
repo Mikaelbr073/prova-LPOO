@@ -1,6 +1,7 @@
 package aplicacao;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Teste {
 
 			opcao = JOptionPane.showInputDialog(null,
 					"1. Cadastrar Conta ou Poupança \n" + "2. Realizar depósito \n" + "3. Render Juros \n"
-							+ "4. Consultar número e nome da agência \n" + "5. Alterar o número e nome da agência \n"
+							+ "4. Consultar Informações da agência \n" + "5. Alterar o número e nome da agência \n"
 							+ "0. Sair \n",
 					"--------------------IFPE Bank--------------------", JOptionPane.DEFAULT_OPTION);
 
@@ -54,6 +55,7 @@ public class Teste {
 					if (novaConta.equals("1")) {
 						Conta conta = cadastraConta(1);
 						bancoDeDados.add(conta);
+						JOptionPane.showMessageDialog(null, conta.toString(), "Dados de Conta", JOptionPane.QUESTION_MESSAGE);
 						break;
 					}
 
@@ -81,7 +83,7 @@ public class Teste {
 									"Faça seu depósito\n" + "-->Valor do depósito \n",
 									"--------------------IFPE Bank--------------------", JOptionPane.DEFAULT_OPTION));
 							bancoDeDados.get(i).deposito(novoValor);
-							DecimalFormat arrumar = new DecimalFormat("0.00");
+							NumberFormat arrumar = NumberFormat.getCurrencyInstance();
 							JOptionPane.showMessageDialog(null,
 									"O valor atual é de R$:" + arrumar.format(bancoDeDados.get(i).getSaldo()),
 									"Seu saldo", JOptionPane.INFORMATION_MESSAGE);
@@ -91,30 +93,69 @@ public class Teste {
 			}
 
 			else if (opcao.equals("3")) {
-				String buscarCPF = JOptionPane.showInputDialog(null,
-						"Para ver seu saldo com juros digite seu CPF \n" + "--> CPF \n",
-						"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
-				for (int i = 0; i < bancoDeDados.size(); i++) {
-					if (bancoDeDados.get(i).getCliente().getCpf().equals(buscarCPF)) {
-						Poupanca poupanca = (Poupanca) bancoDeDados.get(i);
-						poupanca.render();
-						DecimalFormat arrumar = new DecimalFormat("0.00");
-						JOptionPane.showMessageDialog(null,
-								"O valor atual é de R$ :" + arrumar.format(bancoDeDados.get(i).getSaldo()), "Seu saldo",
-								JOptionPane.INFORMATION_MESSAGE);
-					}
-
-					else {
-
-						JOptionPane.showMessageDialog(null, "CPF não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
-					}
+				if (bancoDeDados.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Não existe contas cadastradas", "Erro",
+							JOptionPane.ERROR_MESSAGE);
 
 				}
 
+				else {
+					String buscarCPF = JOptionPane.showInputDialog(null,
+							"Para ver seu saldo com juros digite seu CPF \n" + "--> CPF \n",
+							"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+					for (int i = 0; i < bancoDeDados.size(); i++) {
+						if (bancoDeDados.get(i).getCliente().getCpf().equals(buscarCPF)) {
+							Poupanca poupanca = (Poupanca) bancoDeDados.get(i);
+							poupanca.render();
+							NumberFormat arrumar = NumberFormat.getCurrencyInstance();
+							JOptionPane.showMessageDialog(null,
+									"O valor atual é de R$ :" + arrumar.format(bancoDeDados.get(i).getSaldo()),
+									"Seu saldo", JOptionPane.INFORMATION_MESSAGE);
+						}
+
+						else {
+
+							JOptionPane.showMessageDialog(null, "CPF não encontrado", "Erro",
+									JOptionPane.ERROR_MESSAGE);
+						}
+
+					}
+				}
 			}
 
 			else if (opcao.equals("4")) {
+				if (bancoDeDados.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Não existe contas cadastradas", "Erro",
+							JOptionPane.ERROR_MESSAGE);
 
+				}
+
+				else {
+					String todasContas = "";
+					String numeroAgencia = JOptionPane.showInputDialog(null,
+							"Digite o número da agência \n" + "--> Número da Agência \n",
+							"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+					String nomeAgencia = JOptionPane.showInputDialog(null,
+							"Digite o nome da agência \n" + "--> Nome da Agência \n",
+							"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+
+					for (int i = 0; i < bancoDeDados.size(); i++) {
+
+						if (bancoDeDados.get(i).getBanco().getNomeAgencia().equals(nomeAgencia)
+								&& bancoDeDados.get(i).getBanco().getNumeroAgencia().equals(numeroAgencia)) {
+
+							todasContas += "Nome do cliente: " + bancoDeDados.get(i).getCliente().getNome()
+									+ "\n CPF do Cliente: " + bancoDeDados.get(i).getCliente().getCpf() + "\n";
+
+						}
+
+					}
+					
+					JOptionPane.showMessageDialog(null, todasContas, "Contas nesse banco",
+							JOptionPane.QUESTION_MESSAGE);	
+				}
+
+				
 			}
 
 			else if (opcao.equals("5")) {
@@ -148,8 +189,7 @@ public class Teste {
 											+ bancoDeDados.get(i).getBanco().getNumeroAgencia(),
 									"Conta Atualizado com sucesso", JOptionPane.QUESTION_MESSAGE);
 
-						} 
-						else {
+						} else {
 							JOptionPane.showMessageDialog(null, "Esse nome não existe no banco de dados", "Erro",
 									JOptionPane.ERROR_MESSAGE);
 

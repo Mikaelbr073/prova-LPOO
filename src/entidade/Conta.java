@@ -1,5 +1,7 @@
 package entidade;
 
+import java.text.NumberFormat;
+
 /**
  * @author Mikael C. Barros
  *
@@ -51,5 +53,15 @@ public class Conta {
 
 		this.saldo = this.getSaldo() + novoValor;
 	}
-
+	@Override
+		public String toString() {
+			NumberFormat arrumar = NumberFormat.getCurrencyInstance();
+			return ""
+					+ "Nome: " + getCliente().getNome()
+					+ "\nCPF: " + getCliente().getCpf()
+					+ "\nNúmero da Conta: " + getNumero()
+					+ "\nNúmero da Agência: " + getBanco().getNumeroAgencia()
+					+ "\nNome da Agência: " + getBanco().getNomeAgencia()
+					+ "\nSaldo em Conta: " + arrumar.format(getSaldo()); 
+		}
 }
