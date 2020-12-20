@@ -1,5 +1,6 @@
 package aplicacao;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class Teste {
 					}
 
 					if (novaConta.equals("2")) {
-						
+
 						Poupanca poupanca = (Poupanca) cadastraConta(2);
 						bancoDeDados.add(poupanca);
 						break;
@@ -65,9 +66,50 @@ public class Teste {
 
 			else if (opcao.equals("2")) {
 
+				if (bancoDeDados.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Não existe contas cadastradas", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+				else {
+					String buscarCPF = JOptionPane.showInputDialog(null,
+							"Para realizar um depósito digite seu CPF \n" + "--> CPF \n",
+							"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+					for (int i = 0; i < bancoDeDados.size(); i++) {
+						if (bancoDeDados.get(i).getCliente().getCpf().equals(buscarCPF)) {
+							double novoValor = Double.parseDouble(JOptionPane.showInputDialog(null,
+									"Faça seu depósito\n" + "-->Valor do depósito \n",
+									"--------------------IFPE Bank--------------------", JOptionPane.DEFAULT_OPTION));
+							bancoDeDados.get(i).deposito(novoValor);
+							DecimalFormat arrumar = new DecimalFormat("0.00");
+							JOptionPane.showMessageDialog(null,
+									"O valor atual é de R$:" + arrumar.format(bancoDeDados.get(i).getSaldo()),
+									"Seu saldo", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
 			}
 
 			else if (opcao.equals("3")) {
+				String buscarCPF = JOptionPane.showInputDialog(null,
+						"Para ver seu saldo com juros digite seu CPF \n" + "--> CPF \n",
+						"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+				for (int i = 0; i < bancoDeDados.size(); i++) {
+					if (bancoDeDados.get(i).getCliente().getCpf().equals(buscarCPF)) {
+						Poupanca poupanca = (Poupanca) bancoDeDados.get(i);
+						poupanca.render();
+						DecimalFormat arrumar = new DecimalFormat("0.00");
+						JOptionPane.showMessageDialog(null,
+								"O valor atual é de R$ :" + arrumar.format(bancoDeDados.get(i).getSaldo()), "Seu saldo",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+
+					else {
+
+						JOptionPane.showMessageDialog(null, "CPF não encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
+
+				}
 
 			}
 
@@ -76,6 +118,44 @@ public class Teste {
 			}
 
 			else if (opcao.equals("5")) {
+				if (bancoDeDados.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Não existe contas cadastradas", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+				else {
+					String buscarNome = JOptionPane.showInputDialog(null,
+							"Para alterar número e nome da agência, digite seu nome\n" + "--> Nome \n",
+							"--------------------IFPE Bank--------------------", JOptionPane.QUESTION_MESSAGE);
+					for (int i = 0; i < bancoDeDados.size(); i++) {
+						if (bancoDeDados.get(i).getCliente().getNome().equals(buscarNome)) {
+
+							String nomeAgencia = JOptionPane.showInputDialog(null,
+									"Insira os Dados abaixo \n" + "-->Nome da Agência \n",
+									"--------------------IFPE Bank--------------------", JOptionPane.DEFAULT_OPTION);
+
+							String numeroAgencia = JOptionPane.showInputDialog(null,
+									"Insira os Dados abaixo \n" + "-->Número do Banco \n",
+									"--------------------IFPE Bank---------------------", JOptionPane.DEFAULT_OPTION);
+							Banco banco = new Banco(numeroAgencia, nomeAgencia);
+
+							bancoDeDados.get(i).setBanco(banco);
+
+							JOptionPane.showMessageDialog(null,
+									"Esses são seus novos dados: \n" + "O novo nome de sua agência: "
+											+ bancoDeDados.get(i).getBanco().getNomeAgencia()
+											+ "\nO novo número de sua agência: "
+											+ bancoDeDados.get(i).getBanco().getNumeroAgencia(),
+									"Conta Atualizado com sucesso", JOptionPane.QUESTION_MESSAGE);
+
+						} 
+						else {
+							JOptionPane.showMessageDialog(null, "Esse nome não existe no banco de dados", "Erro",
+									JOptionPane.ERROR_MESSAGE);
+
+						}
+					}
+				}
 
 			}
 
@@ -89,6 +169,7 @@ public class Teste {
 
 			}
 		}
+
 	}
 
 	public static Conta cadastraConta(int opcao) {

@@ -6,11 +6,10 @@ package entidade;
  */
 public class Poupanca extends Conta {
 	
-	private double juros;
+	private double juros = super.getSaldo()/45;
 
 	public Poupanca(String numero, Banco banco, Cliente cliente, double saldo) {
 		super(numero, banco, cliente, saldo);
-		this.juros = 0;
 	}
 
 	public double getJuros() {
@@ -19,11 +18,12 @@ public class Poupanca extends Conta {
 
 	public void setJuros(double juros) {
 		this.juros = juros;
+		
 	}
 	
 	public void render() {
-		double novo = super.getSaldo() + super.getSaldo()/45;
-		super.setSaldo(novo);	
+		double novo = this.juros;
+		super.deposito(novo);
 	}
 	
 }

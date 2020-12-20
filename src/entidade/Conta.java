@@ -47,8 +47,9 @@ public class Conta {
 		return saldo;
 	}
 
-	public void setSaldo(double saldo) {
-		this.saldo = saldo;
+	public void deposito(double novoValor) {
+
+		this.saldo = this.getSaldo() + novoValor;
 	}
 
 }
